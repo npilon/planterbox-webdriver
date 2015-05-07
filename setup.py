@@ -6,6 +6,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 requires = [
     "planterbox",
+    "selenium",
 ]
 
 description = 'Steps for web testing using selenium and planterbox'
