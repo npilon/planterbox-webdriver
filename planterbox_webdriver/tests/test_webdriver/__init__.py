@@ -3,21 +3,24 @@ from ..html_pages import PAGES
 browser = None
 
 
-def setUpModule():
+from planterbox import (
+    hook,
+)
+from planterbox_webdriver.webdriver import *
+
+
+@hook('before', 'feature')
+def instantiate_browser(feature_suite):
     from selenium import webdriver
     global browser
     browser = webdriver.Firefox()
 
 
-def tearDownModule():
+@hook('after', 'feature')
+def quit_browser(feature_suite):
     global browser
     browser.quit()
-
-
-from planterbox import (
-    hook,
-)
-from planterbox_webdriver.webdriver import *
+    browser = None
 
 
 @hook('before', 'scenario')
