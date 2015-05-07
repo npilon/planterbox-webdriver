@@ -52,11 +52,15 @@ def wait_for_content(browser, content):
     return contains_content(browser, content)
 
 
+def lookup_url(world, url):
+    return getattr(world, 'PAGES', {}).get(url, url)
+
+
 # URLS
 @step('I visit "(.*?)"$')
 @step('I go to "(.*?)"$')
 def visit(test, url):
-    url = getattr(test.world, 'PAGES', {}).get(url, url)
+    url = lookup_url(test.world, url)
     test.world.browser.get(url)
 
 
@@ -167,15 +171,12 @@ def should_not_see(test, text):
     test.assertFalse(contains_content(test.world.browser, text))
 
 
-@step('I should be at "(.*?)"$')
-def url_should_be(test, url):
-    test.assertEqual(url, test.world.browser.current_url)
-
-
 # Browser
+@step('I should be at "(.*?)"$')
 @step('The browser\'s URL should be "(.*?)"$')
 def browser_url_should_be(test, url):
-    test.assertEqual(url, test.world.browser.current_url)
+    test.assertEqual(lookup_url(test.world, url),
+                     test.world.browser.current_url)
 
 
 @step('The browser\'s URL should contain "(.*?)"$')
