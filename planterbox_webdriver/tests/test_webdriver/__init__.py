@@ -17,8 +17,7 @@ def tearDownModule():
 from planterbox import (
     hook,
 )
-from planterbox_webdriver.css_selector_steps import *
-from planterbox_webdriver.webdriver import visit
+from planterbox_webdriver.webdriver import *
 
 
 @hook('before', 'scenario')
