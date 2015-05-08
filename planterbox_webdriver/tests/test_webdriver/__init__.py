@@ -2,22 +2,19 @@ from ..html_pages import PAGES
 
 browser = None
 
-
 from planterbox import (
     hook,
 )
 from planterbox_webdriver.webdriver import *
 
 
-@hook('before', 'feature')
-def instantiate_browser(feature_suite):
+def setUpModule(feat):
     from selenium import webdriver
     global browser
     browser = webdriver.Firefox()
 
 
-@hook('after', 'feature')
-def quit_browser(feature_suite):
+def tearDownModule(feat):
     global browser
     browser.quit()
     browser = None
