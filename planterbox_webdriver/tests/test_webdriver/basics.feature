@@ -38,3 +38,11 @@ Feature: I should see, I should not see
     Scenario: Page title
         When I go to "basic_page"
         Then the page title should be "A Basic Page"
+        
+    Scenario: I fill in a form
+        Given I go to "basic_page"
+        And I fill in "bio" with "everything awesome"
+        And I fill in "pass" with "neat"
+        When I press "Submit!"
+        Then The browser's URL should contain "bio=everything"
+
