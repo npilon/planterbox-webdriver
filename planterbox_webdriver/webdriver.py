@@ -283,7 +283,7 @@ def element_not_focused(test, id):
     )
     focused = test.world.browser.switch_to_active_element()
 
-    test.assertEqual(elem, focused)
+    test.assertNotEqual(elem, focused)
 
 
 @step(r'Input "([^"]*)" (?:has|should have) value "([^"]*)"')
