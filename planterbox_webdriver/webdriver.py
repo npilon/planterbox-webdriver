@@ -364,11 +364,11 @@ def select_single_item(test, option_name, select_name):
     option_box.click()
 
 
-# TODO: Requires multi-line step support
-# @step('I select the following from "([^"]*?)":?$')
-def select_multi_items(test, select_name):
+@step('I select the following from "([^"]*?)":?', multiline=True)
+def select_multi_items(test, select_name, option_names):
     # Ensure only the options selected are actually selected
-    option_names = step.multiline.split('\n')
+    option_names = [on.strip() for on
+                    in option_names.split('\n') if on.strip()]
     select_box = find_field(test.world.browser, 'select', select_name)
 
     select = Select(select_box)
@@ -387,11 +387,12 @@ def assert_single_selected(test, option_name, select_name):
     test.assertTrue(option_box.is_selected())
 
 
-# TODO: Requires multi-line step support.
-# @step('The following options from "([^"]*?)" should be selected:?$')
-def assert_multi_selected(test, select_name):
+@step('The following options from "([^"]*?)" should be selected:?',
+      multiline=True)
+def assert_multi_selected(test, select_name, option_names):
     # Ensure its not selected unless its one of our options
-    option_names = step.multiline.split('\n')
+    option_names = [on.strip() for on
+                    in option_names.split('\n') if on.strip()]
     select_box = find_field(test.world.browser, 'select', select_name)
     option_elems = select_box.find_elements_by_xpath(str('./option'))
     for option in option_elems:

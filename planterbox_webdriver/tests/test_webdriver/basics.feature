@@ -46,14 +46,13 @@ Feature: I exercise basic functionality of webdriver
         And I should not see an element with tooltip "Hidden"
         When I click the element with tooltip "A tooltip"
         Then the browser's URL should contain "#anchor"
-    
+
     Scenario: Test labels
         When I go to "basic_page"
         And I click on label "Favorite Colors:"
         Then element with id "fav_colors" should be focused
-        # 'should not be' requires known failure support
         And element with id "bio_field" should not be focused
-    
+
     Scenario: Test labels fail
         When I go to "basic_page"
         And I click on label "Favorite Colors:"
@@ -67,18 +66,18 @@ Feature: I exercise basic functionality of webdriver
         And I fill in "pass" with "neat"
         When I press "Submit!"
         Then The browser's URL should contain "bio=everything"
-        
+
     Scenario: Submit only form
         When I go to "basic_page"
         And I submit the form with id "the-form"
         Then the browser's URL should contain "bio="
         And the browser's URL should contain "user="
-        
+
     Scenario: Test input values
         When I go to "basic_page"
         And I fill in "username" with "Danni"
         Then input "username" has value "Danni"
-        
+
     Scenario: Test date input
         When I go to "basic_page"
         And I fill in "dob" with "1900/01/01"
@@ -89,14 +88,14 @@ Feature: I exercise basic functionality of webdriver
         When I check "I have a bike"
         Then The "I have a bike" checkbox should be checked
         And The "I have a car" checkbox should not be checked
-        
+
     Scenario: Checkboxes unchecked
         Given I go to "basic_page"
         And I check "I have a bike"
         And The "I have a bike" checkbox should be checked
         When I uncheck "I have a bike"
         Then The "I have a bike" checkbox should not be checked
-    
+
     Scenario: Combo boxes
         Given I go to "basic_page"
         Then I should see option "Mercedes" in selector "car_choice"
@@ -104,13 +103,12 @@ Feature: I exercise basic functionality of webdriver
         And I should not see option "Skoda" in selector "car_choice"
         When I select "Mercedes" from "car_choice"
         Then The "Mercedes" option from "car_choice" should be selected
-    
+
     Scenario: Combo boxes fail
         Given I go to "basic_page"
         # 'should not see' requires known failure support
         Then I should not see option "Mercedes" in selector "car_choice"
-    
-    # Requires Multi-line step support
+
     Scenario: Multi-combo-boxes
         Given I go to "basic_page"
         When I select the following from "Favorite Colors:":
@@ -129,14 +127,14 @@ Feature: I exercise basic functionality of webdriver
         And I choose "Male"
         Then The "Male" option should be chosen
         And The "Female" option should not be chosen
-    
-    Scenario: Accept alert 
+
+    Scenario: Accept alert
         When I go to "alert_page"
         Then I should see an alert with text "This is an alerting alert"
         When I accept the alert
         Then I should not see an alert
         And I should see "true"
-        
+
     Scenario: Dismiss alert
         When I go to "alert_page"
         Then I should see an alert with text "This is an alerting alert"
