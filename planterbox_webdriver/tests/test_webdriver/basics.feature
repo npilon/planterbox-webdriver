@@ -53,11 +53,6 @@ Feature: I exercise basic functionality of webdriver
         Then element with id "fav_colors" should be focused
         And element with id "bio_field" should not be focused
 
-    Scenario: Test labels fail
-        When I go to "basic_page"
-        And I click on label "Favorite Colors:"
-        # 'should not be' requires known failure support
-        Then element with id "fav_colors" should not be focused
 
 # Forms stuff
     Scenario: Fill in a form
@@ -103,11 +98,6 @@ Feature: I exercise basic functionality of webdriver
         And I should not see option "Skoda" in selector "car_choice"
         When I select "Mercedes" from "car_choice"
         Then The "Mercedes" option from "car_choice" should be selected
-
-    Scenario: Combo boxes fail
-        Given I go to "basic_page"
-        # 'should not see' requires known failure support
-        Then I should not see option "Mercedes" in selector "car_choice"
 
     Scenario: Multi-combo-boxes
         Given I go to "basic_page"
