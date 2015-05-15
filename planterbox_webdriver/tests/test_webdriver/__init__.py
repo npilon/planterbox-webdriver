@@ -9,6 +9,8 @@ browser = None
 
 @hook('before', 'feature')
 def create_webdriver(feat):
+    from planterbox_webdriver.monkeypatch import fix_inequality
+    fix_inequality()
     from selenium import webdriver
     global browser
     browser = webdriver.Firefox()

@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 
 requires = [
-    "planterbox>=0.2",
+    "planterbox>=0.3",
     "selenium",
 ]
 
