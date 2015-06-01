@@ -4,25 +4,22 @@ from planterbox import (
 )
 from planterbox_webdriver.webdriver import *
 
-browser = None
-
 
 @hook('before', 'feature')
-def create_webdriver(feat):
+def create_webdriver(test):
     from planterbox_webdriver.monkeypatch import fix_inequality
     fix_inequality()
     from selenium import webdriver
-    global browser
-    browser = webdriver.Firefox()
+    test.world.browser = webdriver.Firefox()
 
 
 @hook('after', 'feature')
-def quit_webdriver(feat):
+def quit_webdriver(test):
     global browser
-    browser.quit()
-    browser = None
+    test.world.browser.quit()
+    test.world.browser = None
 
 
 @hook('before', 'scenario')
-def reset_browser(scenario):
-    browser.get('')
+def reset_browser(test):
+    test.world.browser.get('')
