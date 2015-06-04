@@ -5,14 +5,14 @@ from setuptools import setup, find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 
 requires = [
-    "planterbox>=0.3",
+    "planterbox>=0.4",
     "selenium",
 ]
 
 description = 'Steps for web testing using selenium and planterbox'
 
 setup(name='planterbox-webdriver',
-      version='0.1',
+      version='0.2',
       description=description,
       classifiers=[
           "Intended Audience :: Developers",

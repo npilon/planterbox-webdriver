@@ -1,7 +1,10 @@
-from importlib import import_module
 from unittest import TestCase
 
 from mock import Mock
+
+from nose2.util import (
+    transplant_class,
+)
 
 from ..html_pages import PAGES
 from planterbox import (
@@ -16,15 +19,14 @@ def create_webdriver(feat):
     from planterbox_webdriver.monkeypatch import fix_inequality
     fix_inequality()
     from selenium import webdriver
-    global browser
-    browser = webdriver.Firefox()
+    feat.browser = webdriver.Firefox()
 
 
 @hook('after', 'feature')
 def quit_webdriver(feat):
     global browser
-    browser.quit()
-    browser = None
+    feat.browser.quit()
+    feat.browser = None
 
 
 class TestFailures(TestCase):
@@ -42,8 +44,8 @@ class TestFailures(TestCase):
         def captureFailure(*args):
             self.failure = args
 
-        feature_test = FeatureTestCase(
-            world=import_module(self.__module__),
+        MyFeatureTestCase = transplant_class(FeatureTestCase, self.__module__)
+        feature_test = MyFeatureTestCase(
             feature_path=__file__,
             feature_text=feature_text,
         )
@@ -74,8 +76,8 @@ class TestFailures(TestCase):
         def captureFailure(*args):
             self.failure = args
 
-        feature_test = FeatureTestCase(
-            world=import_module(self.__module__),
+        MyFeatureTestCase = transplant_class(FeatureTestCase, self.__module__)
+        feature_test = MyFeatureTestCase(
             feature_path=__file__,
             feature_text=feature_text,
         )

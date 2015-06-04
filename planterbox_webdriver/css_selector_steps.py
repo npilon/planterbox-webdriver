@@ -86,7 +86,7 @@ def find_parents_by_jquery(browser, selector):
 
 @step(r'There should be an element matching \$\("(.*?)"\)$')
 def check_element_by_selector(test, selector):
-    elems = find_elements_by_jquery(test.world.browser, selector)
+    elems = find_elements_by_jquery(test.browser, selector)
     test.assertTrue(elems)
 
 
@@ -94,32 +94,32 @@ def check_element_by_selector(test, selector):
     r'There should be an element matching \$\("(.*?)"\) within (\d+) seconds?$'
 )
 def wait_for_element_by_selector(test, selector, seconds):
-    elems = wait_for_elem(test.world.browser, selector, int(seconds))
+    elems = wait_for_elem(test.browser, selector, int(seconds))
     test.assertTrue(elems)
 
 
 @step(r'There should be exactly (\d+) elements matching \$\("(.*?)"\)$')
 def count_elements_exactly_by_selector(test, number, selector):
-    elems = find_elements_by_jquery(test.world.browser, selector)
+    elems = find_elements_by_jquery(test.browser, selector)
     test.assertEqual(len(elems), int(number))
 
 
 @step(r'I fill in \$\("(.*?)"\) with "(.*?)"$')
 def fill_in_by_selector(test, selector, value):
-    elem = find_element_by_jquery(test, test.world.browser, selector)
+    elem = find_element_by_jquery(test, test.browser, selector)
     elem.clear()
     elem.send_keys(value)
 
 
 @step(r'I submit \$\("(.*?)"\)')
 def submit_by_selector(test, selector):
-    elem = find_element_by_jquery(test, test.world.browser, selector)
+    elem = find_element_by_jquery(test, test.browser, selector)
     elem.submit()
 
 
 @step(r'I check \$\("(.*?)"\)$')
 def check_by_selector(test, selector):
-    elem = find_element_by_jquery(test, test.world.browser, selector)
+    elem = find_element_by_jquery(test, test.browser, selector)
     if not elem.is_selected():
         elem.click()
 
@@ -127,27 +127,27 @@ def check_by_selector(test, selector):
 @step(r'I click \$\("(.*?)"\)$')
 def click_by_selector(test, selector):
     # No need for separate button press step with selector style.
-    elem = find_element_by_jquery(test, test.world.browser, selector)
+    elem = find_element_by_jquery(test, test.browser, selector)
     elem.click()
 
 
 @step(r'I follow the link \$\("(.*?)"\)$')
 def click_link_by_selector(test, selector):
-    elem = find_element_by_jquery(test, test.world.browser, selector)
+    elem = find_element_by_jquery(test, test.browser, selector)
     href = elem.get_attribute('href')
-    test.world.browser.get(href)
+    test.browser.get(href)
 
 
 @step(r'\$\("(.*?)"\) should be selected$')
 def selected_by_selector(test, selector):
-    elem = find_element_by_jquery(test, test.world.browser, selector)
+    elem = find_element_by_jquery(test, test.browser, selector)
     test.assertTrue(elem.is_selected())
 
 
 @step(r'I select \$\("(.*?)"\)$')
 def select_by_selector(test, selector):
-    option = find_element_by_jquery(test, test.world.browser, selector)
-    selectors = find_parents_by_jquery(test.world.browser, selector)
+    option = find_element_by_jquery(test, test.browser, selector)
+    selectors = find_parents_by_jquery(test.browser, selector)
     test.assertGreater(len(selectors), 0)
     selector = selectors[0]
     selector.click()
@@ -158,7 +158,7 @@ def select_by_selector(test, selector):
 
 @step(r'There should not be an element matching \$\("(.*?)"\)$')
 def check_no_element_by_selector(test, selector):
-    elems = find_elements_by_jquery(test.world.browser, selector)
+    elems = find_elements_by_jquery(test.browser, selector)
     test.assertFalse(elems)
 
 
