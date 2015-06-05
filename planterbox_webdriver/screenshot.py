@@ -70,3 +70,7 @@ def record_run_feature_report(test):
                                          )
         with open(feature_json_path, 'w') as f:
             json.dump(test.screenshot_report, f)
+
+        del test.screenshot_report
+        del test.screenshot_path
+        del test.screenshot_root

@@ -34,18 +34,20 @@ def test_set_save_directory(test):
 @hook('after', 'feature')
 def test_record_run_feature_report(test):
     from planterbox_webdriver.screenshot import record_run_feature_report
+    screenshot_path = test.screenshot_path
+    screenshot_report = test.screenshot_report
     record_run_feature_report(test)
-    test.assertTrue(os.path.isdir(test.screenshot_path))
+    test.assertTrue(os.path.isdir(screenshot_path))
     feature_name_json = '{}.json'.format(
         os.path.splitext(os.path.basename(test.feature_path))[0]
     )
-    feature_json_path = os.path.join(test.screenshot_path,
+    feature_json_path = os.path.join(screenshot_path,
                                      feature_name_json,
                                      )
-    pngs = glob(os.path.join(test.screenshot_path,
+    pngs = glob(os.path.join(screenshot_path,
                              '*.png',
                              ))
     test.assertGreater(len(pngs), 0)
     with open(feature_json_path, 'r') as f:
-        test.assertEqual(load(f), test.screenshot_report)
+        test.assertEqual(load(f), screenshot_report)
     rmtree(test.config['screenshot.base'][0])
