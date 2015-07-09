@@ -44,14 +44,13 @@ def capture_screenshot_delay(test, delay):
 
 
 @hook('before', 'feature')
-def set_save_directory(test):
+def set_save_directory(base, source):
     """Sets the root save directory for saving screenshots.
 
     Screenshots will be saved in subdirectories under this directory by
     browser window size. """
-    root = os.path.join(test.config['screenshot.base'][0],
-                        test.config['screenshot.source'][0],
-                        )
+    root = os.path.join(base, source)
+    
     if not os.path.isdir(root):
         os.makedirs(root)
 
