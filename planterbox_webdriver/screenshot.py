@@ -47,8 +47,6 @@ def capture_screenshot_delay(test, delay):
 def set_save_directory(test):
     """
         Sets the root save directory for saving screenshots.
-        Screenshots will be saved in subdirectories under this directory by
-        browser window size.
     """
     
     import datetime
