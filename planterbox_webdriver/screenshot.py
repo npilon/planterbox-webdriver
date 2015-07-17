@@ -48,23 +48,17 @@ def set_save_directory(test):
     """
         Sets the root save directory for saving screenshots.
     """
-    
-    import datetime
-    import pytz
-    
-    now = datetime.datetime.now(pytz.utc)
-    test_run_date = now.strftime("%Y-%m-%d")
 
     base = '{}/{}'.format(
         test.config['screenshot.dir'][0],
-        test_run_date
+        test.config['start_time'][0],
     )
 
     root = os.path.join(
         base,
         test.config['screenshot.source'][0],
     )
-                        
+
     if not os.path.isdir(root):
         os.makedirs(root)
 
