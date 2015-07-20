@@ -49,13 +49,9 @@ def set_save_directory(test):
         Sets the root save directory for saving screenshots.
     """
 
-    base = '{}/{}'.format(
+    root = os.path.join(
         test.config['screenshot.dir'][0],
         test.config['start_time'][0],
-    )
-
-    root = os.path.join(
-        base,
         test.config['screenshot.source'][0],
     )
 
