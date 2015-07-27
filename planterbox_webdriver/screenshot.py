@@ -53,7 +53,6 @@ def set_save_directory(test):
         test.config['screenshot.dir'][0],
         test.config['start_date'][0],
         test.config['screenshot.source'][0],
-        test.config['start_time'][0],
     )
 
     if not os.path.isdir(root):
