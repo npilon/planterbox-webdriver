@@ -26,8 +26,8 @@ from ..test_webdriver import (
 def test_set_save_directory(test):
     from planterbox_webdriver.screenshot import set_save_directory
     test_temp = mkdtemp()
-    test.config._mvd['screenshot.base'] = [test_temp]
     test.config._mvd['screenshot.source'] = 'tests'
+    test.config._mvd['screenshot.dir'] = [test_temp]
     set_save_directory(test)
 
 
@@ -50,4 +50,4 @@ def test_record_run_feature_report(test):
     test.assertGreater(len(pngs), 0)
     with open(feature_json_path, 'r') as f:
         test.assertEqual(load(f), screenshot_report)
-    rmtree(test.config['screenshot.base'][0])
+    rmtree(test.config['screenshot.dir'][0])
