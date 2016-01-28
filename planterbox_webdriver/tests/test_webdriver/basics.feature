@@ -49,8 +49,8 @@ Feature: I exercise basic functionality of webdriver
 
     Scenario: Test labels
         When I go to "basic_page"
-        And I click on label "Favorite Colors:"
-        Then element with id "fav_colors" should be focused
+        And I click on label "Password:"
+        Then element with id "pass" should be focused
         And element with id "bio_field" should not be focused
 
 

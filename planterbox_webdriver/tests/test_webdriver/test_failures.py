@@ -38,8 +38,8 @@ class TestFailures(TestCase):
         feature_text = """Feature: I expect a step to fail.
             Scenario: Test labels fail
                 When I go to "basic_page"
-                And I click on label "Favorite Colors:"
-                Then element with id "fav_colors" should not be focused"""
+                And I click on label "Password:"
+                Then element with id "pass" should not be focused"""
 
         def captureFailure(*args):
             self.failure = args
@@ -55,13 +55,13 @@ class TestFailures(TestCase):
             addSuccess=Mock(side_effect=Exception),
         ))
         feature_exc_info = self.failure[1]
-        failstep = 'Then element with id "fav_colors" should not be focused'
+        failstep = 'Then element with id "pass" should not be focused'
         self.assertEqual(feature_exc_info.failed_step.strip(), failstep)
         failname = 'Scenario: Test labels fail'
         self.assertEqual(feature_exc_info.scenario_name.strip(), failname)
         expected_completed = [
             'When I go to "basic_page"',
-            'And I click on label "Favorite Colors:"'
+            'And I click on label "Password:"'
         ]
         completed_steps = [s.strip() for s in feature_exc_info.completed_steps]
         self.assertEqual(completed_steps, expected_completed)
