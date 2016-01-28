@@ -99,7 +99,7 @@ def count_elements_exactly_by_selector(test, number, selector):
 def fill_in_by_selector(test, selector, value):
     elem = find_element_by_jquery(test, test.browser, selector)
     elem.clear()
-    elem.send_keys(value)
+    elem.send_keys(unicode(value, "utf-8"))
 
 
 @step(r'I submit \$\("(.*?)"\)')
