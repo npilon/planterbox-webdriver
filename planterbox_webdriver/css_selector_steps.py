@@ -1,3 +1,4 @@
+import os.path
 import time
 
 from planterbox import step
@@ -19,16 +20,12 @@ def wait_for_elem(browser, sel, timeout=15):
     return elems
 
 
-def load_script(browser, url):
-    """Ensure that JavaScript at a given URL is available to the browser."""
-    if browser.current_url.startswith('file:'):
-        url = 'https:' + url
-    browser.execute_script("""
-    var script_tag = document.createElement("script");
-    script_tag.setAttribute("type", "text/javascript");
-    script_tag.setAttribute("src", arguments[0]);
-    document.getElementsByTagName("head")[0].appendChild(script_tag);
-    """, url)
+def load_jquery(browser):
+    """Ensure that JQuery is available to the browser."""
+    jquery = open(os.path.abspath(
+        os.path.join(os.path.dirname(__file__), 'jquery-2.2.0.min.js')
+    ))
+    browser.execute_script(jquery.read())
 
 
 def find_elements_by_jquery(browser, selector):
@@ -43,10 +40,7 @@ def find_elements_by_jquery(browser, selector):
         )
     except WebDriverException as e:
         if e.msg.startswith(u'$ is not defined'):
-            load_script(
-                browser,
-                "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
-            )
+            load_jquery(browser)
             return browser.execute_script(
                 """return ($ || jQuery)(arguments[0]).get();""", selector,
             )
@@ -72,10 +66,7 @@ def find_parents_by_jquery(browser, selector):
         )
     except WebDriverException as e:
         if e.msg.startswith(u'$ is not defined'):
-            load_script(
-                browser,
-                "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
-            )
+            load_jquery(browser)
             return browser.execute_script(
                 """return ($ || jQuery)(arguments[0]).parent().get();""",
                 selector,
