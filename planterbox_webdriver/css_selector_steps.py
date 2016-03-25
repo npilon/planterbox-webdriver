@@ -52,7 +52,7 @@ def find_element_by_jquery(test, browser, selector):
     """Find a single HTML element using jQuery-style selectors."""
     elements = find_elements_by_jquery(browser, selector)
     test.assertGreater(len(elements), 0,
-                       'No elements matched: {}'.format(selector))
+                       u'No elements matched: {}'.format(selector))
     return elements[0]
 
 
