@@ -1,3 +1,9 @@
+0.3.3
+=====
+
+- Report errors from steps containing non-ASCII parameters better
+
+
 0.3.2
 =====
 
