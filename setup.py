@@ -12,7 +12,7 @@ requires = [
 description = 'Steps for web testing using selenium and planterbox'
 
 setup(name='planterbox-webdriver',
-      version='0.3.3',
+      version='0.3.4',
       description=description,
       classifiers=[
           "Intended Audience :: Developers",
