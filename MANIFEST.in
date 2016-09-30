@@ -1,0 +1,5 @@
+include LICENSE
+include CHANGES
+include README.md
+include unittest.cfg
+include planterbox_webdriver/jquery-2.2.0.min.js
