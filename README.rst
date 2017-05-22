@@ -37,3 +37,4 @@ This package must be detected by ``nose2`` as containing tests; see `nose2's doc
 5. ``from planterbox_webdriver.webdriver import *`` if you want steps that let you find elements in your tests with XPath
 6. ``from planterbox_webdriver.css_selector_steps import *`` for steps that let you find elements in your tests with jQuery-style CSS selectors
 7. Add a ``.feature`` file in this package containing tests specified using `Gherkin <https://github.com/cucumber/cucumber/wiki/Gherkin>`_. ``planterbox`` will turn these into appropriate test case objects and give them to nose to run.
+8. Run your tests: ``nose2``
