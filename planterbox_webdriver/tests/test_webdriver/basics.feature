@@ -24,7 +24,8 @@ Feature: I exercise basic functionality of webdriver
         Given I go to "link_page"
         And I see "Page o link"
         When I click "Next Page"
-        Then I should be at "link_dest"
+        Then I should see "Link destination page" within 3 seconds
+        And I should be at "link_dest"
         And The browser's URL should be "link_dest"
         And The browser's URL should not contain "http://"
 
