@@ -1,6 +1,12 @@
 """Utility functions that combine steps to locate elements"""
 
 import operator
+from six import (
+    text_type,
+)
+from six.moves import (
+    reduce,
+)
 from time import time, sleep
 
 from selenium.common.exceptions import NoSuchElementException
@@ -197,7 +203,7 @@ def find_field_by_name(browser, field, name):
 
 def find_field_by_value(browser, field, name):
     xpath = field_xpath(field, 'value')
-    elems = [elem for elem in XPathSelector(browser, unicode(xpath % name))
+    elems = [elem for elem in XPathSelector(browser, text_type(xpath % name))
              if elem.is_displayed() and elem.is_enabled()]
 
     # sort by shortest first (most closely matching)
@@ -238,7 +244,7 @@ def option_in_select(browser, select_name, option):
     assert select
 
     try:
-        return select.find_element_by_xpath(unicode(
+        return select.find_element_by_xpath(text_type(
             './/option[normalize-space(text()) = "%s"]' % option))
     except NoSuchElementException:
         return None
@@ -265,3 +271,17 @@ def wait_for(func):
         return result
 
     return wrapped
+
+
+def submit_form(element):
+    """Form submission work-around
+
+    See https://github.com/SeleniumHQ/selenium/issues/3483 for details"""
+    if element._w3c:
+        form = element.find_element_by_xpath("./ancestor-or-self::form")
+        element._parent.execute_script(
+            "var e = arguments[0].ownerDocument.createEvent('Event');"
+            "e.initEvent('submit', true, true);"
+            "arguments[0].dispatchEvent(e);", form)
+    else:
+        element.submit()

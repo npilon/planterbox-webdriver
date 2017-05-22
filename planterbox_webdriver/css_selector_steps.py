@@ -5,6 +5,10 @@ from planterbox import step
 
 from selenium.common.exceptions import WebDriverException
 
+from .util import (
+    submit_form,
+)
+
 import logging
 log = logging.getLogger(__name__)
 
@@ -105,7 +109,7 @@ def fill_in_by_selector(test, selector, value):
 @step(r'I submit \$\("(.*?)"\)')
 def submit_by_selector(test, selector):
     elem = find_element_by_jquery(test, test.browser, selector)
-    elem.submit()
+    submit_form(elem)
 
 
 @step(r'I check \$\("(.*?)"\)$')

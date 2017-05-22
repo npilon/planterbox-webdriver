@@ -2,6 +2,10 @@
 
 from importlib import import_module
 
+from six import (
+    text_type,
+)
+
 from planterbox import step
 
 from planterbox_webdriver.util import (
@@ -10,6 +14,7 @@ from planterbox_webdriver.util import (
     find_field,
     find_option,
     option_in_select,
+    submit_form,
     wait_for,
 )
 
@@ -30,7 +35,7 @@ def contains_content(browser, content):
     #  for in it or its subelements, but whose children do NOT contain that
     #  text - otherwise matches <body> or <html> or other similarly useless
     #  things.
-    for elem in browser.find_elements_by_xpath(unicode(
+    for elem in browser.find_elements_by_xpath(text_type(
         u'//*[contains(normalize-space(.),"{content}") '
         u'and not(./*[contains(normalize-space(.),"{content}")])]'.format(
             content=content))):
@@ -274,6 +279,8 @@ def element_focused(test, id):
         u'id("{id}")'.format(id=id)
     )
     focused = test.browser.switch_to_active_element()
+    if isinstance(focused, dict):
+        focused = focused['value']
 
     test.assertEqual(elem, focused)
 
@@ -288,6 +295,8 @@ def element_not_focused(test, id):
         u'id("{id}")'.format(id=id)
     )
     focused = test.browser.switch_to_active_element()
+    if isinstance(focused, dict):
+        focused = focused['value']
 
     test.assertNotEqual(elem, focused)
 
@@ -311,7 +320,7 @@ def submit_the_only_form(test):
     Look for a form on the page and submit it.
     """
     form = test.browser.find_element_by_xpath(str('//form'))
-    form.submit()
+    submit_form(form)
 
 
 @step(r'I submit the form with id "([^"]*)"')
@@ -322,7 +331,7 @@ def submit_form_id(test, id):
     form = test.browser.find_element_by_xpath(
         u'id("{id}")'.format(id=id)
     )
-    form.submit()
+    submit_form(form)
 
 
 @step(r'I submit the form with action "([^"]*)"')
@@ -333,7 +342,7 @@ def submit_form_action(test, url):
     form = test.browser.find_element_by_xpath(
         u'//form[@action="%s"]' % url
     )
-    form.submit()
+    submit_form(form)
 
 
 # Checkboxes

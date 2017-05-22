@@ -10,7 +10,9 @@ def create_webdriver(test):
     from planterbox_webdriver.monkeypatch import fix_inequality
     fix_inequality()
     from selenium import webdriver
-    test.browser = webdriver.Firefox()
+    test.browser = webdriver.Remote(
+        'http://localhost:4444', desired_capabilities={},
+    )
 
 
 @hook('after', 'feature')
@@ -22,4 +24,4 @@ def quit_webdriver(test):
 
 @hook('before', 'scenario')
 def reset_browser(test):
-    test.browser.get('')
+    test.browser.get('about:home')
