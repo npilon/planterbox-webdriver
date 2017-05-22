@@ -22,4 +22,4 @@ def quit_webdriver(test):
 
 @hook('before', 'scenario')
 def reset_browser(test):
-    test.browser.get('')
+    test.browser.get('about:home')

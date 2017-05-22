@@ -10,9 +10,7 @@ def create_webdriver(test):
     from planterbox_webdriver.monkeypatch import fix_inequality
     fix_inequality()
     from selenium import webdriver
-    test.browser = webdriver.Remote(
-        'http://localhost:4444', desired_capabilities={},
-    )
+    test.browser = webdriver.Firefox()
 
 
 @hook('after', 'feature')

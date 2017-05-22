@@ -8,8 +8,10 @@ from nose2.util import (
 
 from ..html_pages import PAGES
 from planterbox import (
-    FeatureTestCase,
     hook,
+)
+from planterbox.feature import (
+    FeatureTestCase,
 )
 from planterbox_webdriver.webdriver import *
 
