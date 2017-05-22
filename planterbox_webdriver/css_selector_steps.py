@@ -43,7 +43,7 @@ def find_elements_by_jquery(browser, selector):
             """return ($ || jQuery)(arguments[0]).get();""", selector
         )
     except WebDriverException as e:
-        if e.msg.startswith(u'$ is not defined'):
+        if u'$ is not defined' in e.msg:
             load_jquery(browser)
             return browser.execute_script(
                 """return ($ || jQuery)(arguments[0]).get();""", selector,
