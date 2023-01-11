@@ -10,6 +10,7 @@ from six.moves import (
 from time import time, sleep
 
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
 
 # pylint:disable=missing-docstring,redefined-outer-name,redefined-builtin
 # pylint:disable=invalid-name
@@ -49,7 +50,7 @@ class XPathSelector(object):
         """
         Fetch the elements from the browser.
         """
-        return self.browser.find_elements_by_xpath(self.xpath)
+        return self.browser.find_elements(By.XPATH, self.xpath)
 
     def _elements(self):
         """
@@ -164,7 +165,7 @@ def find_option(browser, select_name, option_name):
     option_box = find_field(select_box, 'option', option_name)
     if not option_box:
         # Locate by contents
-        option_box = select_box.find_element_by_xpath(str(
+        option_box = select_box.find_element(By.XPATH, str(
             './/option[contains(., "%s")]' % option_name))
     return option_box
 
@@ -244,7 +245,7 @@ def option_in_select(browser, select_name, option):
     assert select
 
     try:
-        return select.find_element_by_xpath(text_type(
+        return select.find_element(By.XPATH, text_type(
             './/option[normalize-space(text()) = "%s"]' % option))
     except NoSuchElementException:
         return None
@@ -278,7 +279,7 @@ def submit_form(element):
 
     See https://github.com/SeleniumHQ/selenium/issues/3483 for details"""
     if element._w3c:
-        form = element.find_element_by_xpath("./ancestor-or-self::form")
+        form = element.find_element(By.XPATH, "./ancestor-or-self::form")
         element._parent.execute_script(
             "var e = arguments[0].ownerDocument.createEvent('Event');"
             "e.initEvent('submit', true, true);"

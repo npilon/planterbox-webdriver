@@ -21,6 +21,7 @@ from planterbox_webdriver.util import (
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 from selenium.common.exceptions import (
     NoSuchElementException,
     StaleElementReferenceException,
@@ -35,7 +36,7 @@ def contains_content(browser, content):
     #  for in it or its subelements, but whose children do NOT contain that
     #  text - otherwise matches <body> or <html> or other similarly useless
     #  things.
-    for elem in browser.find_elements_by_xpath(text_type(
+    for elem in browser.find_elements(By.XPATH, text_type(
         u'//*[contains(normalize-space(.),"{content}") '
         u'and not(./*[contains(normalize-space(.),"{content}")])]'.format(
             content=content))):
@@ -51,7 +52,7 @@ def contains_content(browser, content):
 
 @wait_for
 def wait_for_elem(browser, xpath):
-    return browser.find_elements_by_xpath(str(xpath))
+    return browser.find_elements(By.XPATH, str(xpath))
 
 
 @wait_for
@@ -78,20 +79,20 @@ def visit(test, url):
 # Links
 @step('I click "(.*?)"$')
 def click(test, name):
-    elem = test.browser.find_element_by_link_text(name)
+    elem = test.browser.find_element(By.LINK_TEXT, name)
     elem.click()
 
 
 @step('I should see a link with the url "(.*?)"$')
 def should_see_link(test, link_url):
-    test.assertTrue(test.browser.find_element_by_xpath(
+    test.assertTrue(test.browser.find_element(By.XPATH, 
         u'//a[@href="%s"]' % link_url
     ))
 
 
 @step('I should see a link to "(.*?)" with the url "(.*?)"$')
 def should_see_link_text(test, link_text, link_url):
-    test.assertTrue(test.browser.find_element_by_xpath(
+    test.assertTrue(test.browser.find_element(By.XPATH, 
         u'//a[@href="%s"][./text()="%s"]' % (link_url, link_text)
     ))
 
@@ -99,7 +100,7 @@ def should_see_link_text(test, link_text, link_url):
 @step('I should see a link that contains the text "(.*?)" '
       'and the url "(.*?)"$')
 def should_include_link_text(test, link_text, link_url):
-    test.assertTrue(test.browser.find_element_by_xpath(
+    test.assertTrue(test.browser.find_element(By.XPATH, 
         u'//a[@href="%s"][contains(., "%s")]' % (link_url, link_text)
     ))
 
@@ -107,7 +108,7 @@ def should_include_link_text(test, link_text, link_url):
 # General
 @step('The element with id of "(.*?)" contains "(.*?)"$')
 def element_contains(test, element_id, value):
-    test.assertTrue(test.browser.find_element_by_xpath(
+    test.assertTrue(test.browser.find_element(By.XPATH, 
         u'id("{id}")[contains(., "{value}")]'.format(
             id=element_id, value=value,
         )
@@ -116,7 +117,7 @@ def element_contains(test, element_id, value):
 
 @step('The element with id of "(.*?)" does not contain "(.*?)"$')
 def element_not_contains(test, element_id, value):
-    elem = test.browser.find_elements_by_xpath(
+    elem = test.browser.find_elements(By.XPATH, 
         u'id("{id}")[contains(., "{value}")]'.format(
             id=element_id, value=value,
         )
@@ -126,7 +127,7 @@ def element_not_contains(test, element_id, value):
 
 @wait_for
 def wait_for_visible_elem(browser, xpath):
-    elem = browser.find_elements_by_xpath(str(xpath))
+    elem = browser.find_elements(By.XPATH, str(xpath))
     if not elem:
         return False
     return elem[0].is_displayed()
@@ -143,7 +144,7 @@ def should_see_id_in_seconds(test, element_id, timeout):
 
 @step('I should see an element with id of "(.*?)"$')
 def should_see_id(test, element_id):
-    elem = test.browser.find_element_by_xpath(
+    elem = test.browser.find_element(By.XPATH, 
         u'id("%s")' % element_id
     )
     test.assertTrue(elem.is_displayed())
@@ -152,7 +153,7 @@ def should_see_id(test, element_id):
 @step('I should not see an element with id of "(.*?)"$')
 def should_not_see_id(test, element_id):
     try:
-        elem = test.browser.find_element_by_xpath(
+        elem = test.browser.find_element(By.XPATH, 
             u'id("%s")' % element_id
         )
         test.assertFalse(elem.is_displayed())
@@ -203,7 +204,7 @@ def url_should_not_contain(test, url):
 # Forms
 @step('I should see a form that goes to "(.*?)"$')
 def see_form(test, url):
-    test.assertTrue(test.browser.find_element_by_xpath(
+    test.assertTrue(test.browser.find_element(By.XPATH, 
         u'//form[@action="%s"]' % url
     ))
 
@@ -263,7 +264,7 @@ def click_on_label(test, label):
     Click on a label
     """
 
-    elem = test.browser.find_element_by_xpath(
+    elem = test.browser.find_element(By.XPATH, 
         u'//label[normalize-space(text()) = "%s"]' % label
     )
     elem.click()
@@ -275,7 +276,7 @@ def element_focused(test, id):
     Check if the element is focused
     """
 
-    elem = test.browser.find_element_by_xpath(
+    elem = test.browser.find_element(By.XPATH, 
         u'id("{id}")'.format(id=id)
     )
     focused = test.browser.switch_to_active_element()
@@ -291,7 +292,7 @@ def element_not_focused(test, id):
     Check if the element is not focused
     """
 
-    elem = test.browser.find_element_by_xpath(
+    elem = test.browser.find_element(By.XPATH, 
         u'id("{id}")'.format(id=id)
     )
     focused = test.browser.switch_to_active_element()
@@ -319,7 +320,7 @@ def submit_the_only_form(test):
     """
     Look for a form on the page and submit it.
     """
-    form = test.browser.find_element_by_xpath(str('//form'))
+    form = test.browser.find_element(By.XPATH, str('//form'))
     submit_form(form)
 
 
@@ -328,7 +329,7 @@ def submit_form_id(test, id):
     """
     Submit the form having given id.
     """
-    form = test.browser.find_element_by_xpath(
+    form = test.browser.find_element(By.XPATH, 
         u'id("{id}")'.format(id=id)
     )
     submit_form(form)
@@ -339,7 +340,7 @@ def submit_form_action(test, url):
     """
     Submit the form having given action URL.
     """
-    form = test.browser.find_element_by_xpath(
+    form = test.browser.find_element(By.XPATH, 
         u'//form[@action="%s"]' % url
     )
     submit_form(form)
@@ -409,7 +410,7 @@ def assert_multi_selected(test, select_name, option_names):
     option_names = [on.strip() for on
                     in option_names.split('\n') if on.strip()]
     select_box = find_field(test.browser, 'select', select_name)
-    option_elems = select_box.find_elements_by_xpath(str('./option'))
+    option_elems = select_box.find_elements(By.XPATH, str('./option'))
     for option in option_elems:
         if option.get_attribute('id') in option_names or \
            option.get_attribute('name') in option_names or \
@@ -512,7 +513,7 @@ def see_tooltip(test, tooltip):
     """
     Press a button having a given tooltip.
     """
-    elem = test.browser.find_elements_by_xpath(
+    elem = test.browser.find_elements(By.XPATH, 
         u'//*[@title="%(tooltip)s" or @data-original-title="%(tooltip)s"]' %
         dict(tooltip=tooltip)
     )
@@ -525,7 +526,7 @@ def no_see_tooltip(test, tooltip):
     """
     Press a button having a given tooltip.
     """
-    elem = test.browser.find_elements_by_xpath(
+    elem = test.browser.find_elements(By.XPATH, 
         u'//*[@title="%(tooltip)s" or @data-original-title="%(tooltip)s"]' %
         dict(tooltip=tooltip)
     )
@@ -538,7 +539,7 @@ def press_by_tooltip(test, tooltip):
     """
     Press a button having a given tooltip.
     """
-    for button in test.browser.find_elements_by_xpath(
+    for button in test.browser.find_elements(By.XPATH, 
         u'//*[@title="%(tooltip)s" or @data-original-title="%(tooltip)s"]' %
         dict(tooltip=tooltip)
     ):
