@@ -278,11 +278,11 @@ def submit_form(element):
     """Form submission work-around
 
     See https://github.com/SeleniumHQ/selenium/issues/3483 for details"""
-    if element._w3c:
-        form = element.find_element(By.XPATH, "./ancestor-or-self::form")
-        element._parent.execute_script(
-            "var e = arguments[0].ownerDocument.createEvent('Event');"
-            "e.initEvent('submit', true, true);"
-            "arguments[0].dispatchEvent(e);", form)
-    else:
-        element.click()
+    # if element._w3c:
+    form = element.find_element(By.XPATH, "./ancestor-or-self::form")
+    element._parent.execute_script(
+        "var e = arguments[0].ownerDocument.createEvent('Event');"
+        "e.initEvent('submit', true, true);"
+        "arguments[0].dispatchEvent(e);", form)
+    # else:
+    #     element.click()
