@@ -565,9 +565,9 @@ def page_title(test, title):
 @step(r'I switch to the frame with id "([^"]*)"')
 def switch_to_frame(test, frame):
     elem = test.browser.find_element_by_id(frame)
-    test.browser.switch_to_frame(elem)
+    test.browser.switch_to.frame(elem)
 
 
 @step(r'I switch back to the main view')
 def switch_to_main(test):
-    test.browser.switch_to_default_content()
+    test.browser.switch_to.default_content()
