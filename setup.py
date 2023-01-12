@@ -6,7 +6,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 requires = [
     "planterbox>=0.6.3",
-    "selenium",
+    "selenium>=4.0.0",
     "six",
 ]
 
