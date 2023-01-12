@@ -285,4 +285,4 @@ def submit_form(element):
             "e.initEvent('submit', true, true);"
             "arguments[0].dispatchEvent(e);", form)
     else:
-        element.submit()
+        element.click()
