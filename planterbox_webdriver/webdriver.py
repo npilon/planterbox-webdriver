@@ -279,7 +279,7 @@ def element_focused(test, id):
     elem = test.browser.find_element(By.XPATH, 
         u'id("{id}")'.format(id=id)
     )
-    focused = test.browser.switch_to_active_element()
+    focused = test.browser.switch_to.active_element
     if isinstance(focused, dict):
         focused = focused['value']
 
@@ -295,7 +295,7 @@ def element_not_focused(test, id):
     elem = test.browser.find_element(By.XPATH, 
         u'id("{id}")'.format(id=id)
     )
-    focused = test.browser.switch_to_active_element()
+    focused = test.browser.switch_to.active_element
     if isinstance(focused, dict):
         focused = focused['value']
 
